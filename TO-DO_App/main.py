@@ -1,67 +1,95 @@
-todos = []
-
 while True:
-    user_decision = input("Type 'Add' OR 'Show' OR 'Edit' OR 'Complete' OR 'Exit': ")
-    user_decision = user_decision.capitalize()
-    user_decision = user_decision.strip()
+    user_decision = input("\nType 'Add' OR 'Show' OR 'Edit' OR 'Complete' OR 'Exit': ").strip().capitalize()
 
+    # Read tasks and remove empty lines
+    with open("todos.txt", "a"):
+        pass
+
+    with open("todos.txt", "r") as file:
+        todos = [line.strip() for line in file if line.strip()]
 
     match user_decision:
-        case 'Add':
-            todo = input("Enter a Task: ")
-            todos.append(todo.capitalize())
-        case 'Show':
+
+        case "Add":
+            todo = input("Enter a Task: ").strip()
+
+            if todo:
+                todos.append(todo.capitalize())
+
+                with open("todos.txt", "w") as file:
+                    for task in todos:
+                        file.write(task + "\n")
+
+                print("Task added successfully!")
+            else:
+                print("Task cannot be empty!")
+
+        case "Show":
             if not todos:
-                print('  ')
-                print("============================")
-                print("NO TODO FOUND, ADD NEW TODOS")
-                print("============================")
-                print('  ')
-            for index, task in enumerate(todos, start=1):
-                fnf_task = f"{index}. {task}"
-                print(fnf_task)
-        case 'Edit':
-            for index, task in enumerate(todos, start=1):
-                fnf_task = f"{index}. {task}"
-                print(fnf_task)
-            existing_todo_num = int(input('Enter the number of the Todo you want to edit/replace: '))
-            existing_todo_num = existing_todo_num - 1
-            new_todo = input("Enter a new Task: ")
-            todos[existing_todo_num] = new_todo.capitalize()
-            for index, task in enumerate(todos, start=1):
-                fnf_task = f"{index}. {task}"
-                print(fnf_task)
-            print('  ')
-            print("=================================")
-            print("Your List Is Successfully Edited!")
-            print("=================================")
-            print('  ')
-        case 'Complete':
-            for index, task in enumerate(todos, start=1):
-                fnf_task = f"{index}. {task}"
-                print(fnf_task)
-            index = int(input("Enter the number of task that's complete: "))
-            index = index - 1
-            todos.pop(index)
-            for index, task in enumerate(todos, start=1):
-                fnf_task = f"{index}. {task}"
-                print(fnf_task)
+                print("\nNo TODOs found.")
+            else:
+                print("\n------ YOUR TODO LIST ------")
+                for index, task in enumerate(todos, start=1):
+                    print(f"{index}. {task}")
+
+        case "Edit":
             if not todos:
-                print('  ')
-                print("==================================")
-                print("ALL TASKS COMPLETED SUCCESSFULLY!")
-                print("==================================")
-                print('  ')
-        case 'Exit':
-             print('  ')
-             print("==============={-Goodbye-}===============")
-             break
+                print("No tasks to edit.")
+                continue
+
+            for index, task in enumerate(todos, start=1):
+                print(f"{index}. {task}")
+
+            try:
+                num = int(input("Enter task number: ")) - 1
+
+                if num < 0 or num >= len(todos):
+                    print("Invalid task number.")
+                    continue
+
+                new_task = input("Enter new task: ").strip()
+
+                if new_task:
+                    todos[num] = new_task.capitalize()
+
+                    with open("todos.txt", "w") as file:
+                        for task in todos:
+                            file.write(task + "\n")
+
+                    print("Task updated successfully!")
+
+            except ValueError:
+                print("Please enter a valid number.")
+
+        case "Complete":
+            if not todos:
+                print("No tasks to complete.")
+                continue
+
+            for index, task in enumerate(todos, start=1):
+                print(f"{index}. {task}")
+
+            try:
+                num = int(input("Enter completed task number: ")) - 1
+
+                if num < 0 or num >= len(todos):
+                    print("Invalid task number.")
+                    continue
+
+                removed = todos.pop(num)
+
+                with open("todos.txt", "w") as file:
+                    for task in todos:
+                        file.write(task + "\n")
+
+                print(f"Completed: {removed}")
+
+            except ValueError:
+                print("Please enter a valid number.")
+
+        case "Exit":
+            print("Goodbye!")
+            break
+
         case _:
-            print('  ')
-            print("==================================")
-            print("NO SUCH COMMAND FOUND!")
-            print("==================================")
-
-
-
-
+            print("Invalid command.")
