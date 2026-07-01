@@ -24,6 +24,7 @@ while True:
              file = open('todos.txt', 'r')
              todos = file.readlines()
              file.close()
+           
              print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
              for index, item in enumerate(todos, start = 1):
                 row = f"{index}. {item}"
