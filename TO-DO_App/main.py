@@ -7,9 +7,11 @@ while True:
 
     match user_action:
         case 'Add':
-            todo = input("Enter a todo: ")
+            todo = input("Enter a todo: ") + "\n"
             todo = todo.capitalize()
             todos.append(todo)
+            file = open('todos.txt', 'w')
+            file.writelines(todos)
         case 'Show':
             if not todos:
                 print("No todos are added!")
