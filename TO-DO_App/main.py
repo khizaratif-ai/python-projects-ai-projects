@@ -18,10 +18,13 @@ while True:
             file.writelines(todos)
             file.close()
         case 'Show':
-#            if not todos:
-#               print("No todos are added!")
-#            if todos:
-             print("\n" + f"--------------YOUR TODO LIST--------------")
+           #if not todos:
+               #print("No todos are added!")
+            #if todos:
+             file = open('todos.txt', 'r')
+             todos = file.readlines()
+             file.close()
+             print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
              for index, item in enumerate(todos, start = 1):
                 row = f"{index}. {item}"
                 print(row)
