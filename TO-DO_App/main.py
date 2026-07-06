@@ -25,13 +25,9 @@ while True:
              todos = file.readlines()
              file.close()
 
-             new_todos = []
-             for item in todos:
-                 new_item = item.strip('\n')
-                 new_todos.append(new_item)
-
              print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
-             for index, item in enumerate(new_todos, start = 1):
+             for index, item in enumerate(todos, start = 1):
+                item = item.strip('\n')
                 row = f"{index}. {item}"
                 print(row)
              print("\n")
@@ -42,6 +38,7 @@ while True:
             print("\n""YOUR TODO LIST IS SUCCESSFULLY UPDATED!")
             print("\n" + f"--------------YOUR TODO LIST HAVE--------------")
             for index, item in enumerate(todos, start = 1):
+                item = item.strip('\n')
                 row = f"{index}. {item}"
                 print(row)
             print("\n")
@@ -53,6 +50,7 @@ while True:
             print("\n""YOUR TODO LIST IS SUCCESSFULLY UPDATED!")
             print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
             for index, item in enumerate(todos, start = 1):
+                item = item.strip('\n')
                 row = f"{index}. {item}"
                 print(row)
             print("\n")
