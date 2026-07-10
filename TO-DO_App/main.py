@@ -3,7 +3,7 @@ while True:
     user_action = user_action.capitalize()
     user_action = user_action.strip()
 
-    if 'Add' in user_action:
+    if user_action.startswith('Add'):
         todo = user_action[4:]
         todo = todo.capitalize()
 
@@ -11,12 +11,12 @@ while True:
         todos = file.readlines()
         file.close()
 
-        todos.append(todo)
+        todos.append(todo + "\n")
 
         file = open('todos.txt', 'w')
         file.writelines(todos)
         file.close()
-    elif 'Show' in user_action:
+    elif user_action.startswith('Show'):
        #if not todos:
            #print("No todos are added!")
         #if todos:
@@ -30,7 +30,7 @@ while True:
             row = f"{index}. {item}"
             print(row)
          print("\n")
-    elif 'Edit' in user_action:
+    elif user_action.startswith('Edit'):
         number = int(user_action[5:])
         number = number - 1
         with open('todos.txt', 'r') as file:
@@ -47,7 +47,7 @@ while True:
             print(row)
         print("\n")
 
-    elif 'Complete' in user_action:
+    elif user_action.startswith('Complete'):
         number = int(user_action[9:])
         with open('todos.txt', 'r') as file:
             todos = file.readlines()
@@ -62,7 +62,7 @@ while True:
             print(row)
         print("\n")
 
-    elif 'Exit' in user_action:
+    elif user_action.startswith('Exit'):
         print("\n" + "========================================GOODBYE!========================================")
         break
     else:
