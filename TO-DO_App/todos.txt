@@ -1,2 +1,3 @@
-Wake up
-Clean the trash can
+sleep 
+clean 
+Breakfast

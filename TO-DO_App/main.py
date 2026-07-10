@@ -31,36 +31,44 @@ while True:
             print(row)
          print("\n")
     elif user_action.startswith('Edit'):
-        number = int(user_action[5:])
-        number = number - 1
-        with open('todos.txt', 'r') as file:
-            todos = file.readlines()
-        new_todo = input("Enter new todo: ")
-        todos[number] = new_todo + "\n"
-        with open('todos.txt', 'w') as file:
-            file.writelines(todos)
-        print("\n""YOUR TODO LIST IS SUCCESSFULLY UPDATED!")
-        print("\n" + f"--------------YOUR TODO LIST HAVE--------------")
-        for index, item in enumerate(todos, start = 1):
-            item = item.strip('\n')
-            row = f"{index}. {item}"
-            print(row)
-        print("\n")
+        try:
+            number = int(user_action[5:])
+            number = number - 1
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+            new_todo = input("Enter new todo: ")
+            todos[number] = new_todo + "\n"
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
+            print("\n""YOUR TODO LIST IS SUCCESSFULLY UPDATED!")
+            print("\n" + f"--------------YOUR TODO LIST HAVE--------------")
+            for index, item in enumerate(todos, start = 1):
+                item = item.strip('\n')
+                row = f"{index}. {item}"
+                print(row)
+            print("\n")
+        except ValueError:
+            print("\n" + "Enter the number of the task you want to edit!" + "\n")
+            continue
 
     elif user_action.startswith('Complete'):
-        number = int(user_action[9:])
-        with open('todos.txt', 'r') as file:
-            todos = file.readlines()
-        todos.pop(number - 1)
-        with open('todos.txt', 'w') as file:
-            file.writelines(todos)
-        print("\n""YOUR TODO LIST IS SUCCESSFULLY UPDATED!")
-        print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
-        for index, item in enumerate(todos, start = 1):
-            item = item.strip('\n')
-            row = f"{index}. {item}"
-            print(row)
-        print("\n")
+        try:
+            number = int(user_action[9:])
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+            todos.pop(number - 1)
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
+            print("\n""YOUR TODO LIST IS SUCCESSFULLY UPDATED!")
+            print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
+            for index, item in enumerate(todos, start = 1):
+                item = item.strip('\n')
+                row = f"{index}. {item}"
+                print(row)
+            print("\n")
+        except ValueError:
+            print("\n" + "Enter the number of the task you have completed!" + "\n")
+            continue
 
     elif user_action.startswith('Exit'):
         print("\n" + "========================================GOODBYE!========================================")
