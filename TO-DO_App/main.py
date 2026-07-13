@@ -1,3 +1,10 @@
+def get_todos():
+    with open('todos.txt', 'r') as file:
+        todos = file.readlines()
+    return todos
+
+
+
 while True:
     user_action = input("Type 'Add', 'Show', 'Edit', 'Complete' or 'Exit' : ")
     user_action = user_action.capitalize()
@@ -7,9 +14,7 @@ while True:
         todo = user_action[4:]
         todo = todo.capitalize()
 
-        file = open('todos.txt', 'r')
-        todos = file.readlines()
-        file.close()
+        todos = get_todos()
 
         todos.append(todo + "\n")
 
@@ -20,9 +25,7 @@ while True:
        #if not todos:
            #print("No todos are added!")
         #if todos:
-         file = open('todos.txt', 'r')
-         todos = file.readlines()
-         file.close()
+         todos = get_todos()
 
          print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
          for index, item in enumerate(todos, start = 1):
@@ -34,8 +37,7 @@ while True:
         try:
             number = int(user_action[5:])
             number = number - 1
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+            todos = get_todos()
             new_todo = input("Enter new todo: ")
             todos[number] = new_todo + "\n"
             with open('todos.txt', 'w') as file:
@@ -54,8 +56,7 @@ while True:
     elif user_action.startswith('Complete'):
         try:
             number = int(user_action[9:])
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+            todos = get_todos()
             todos.pop(number - 1)
             with open('todos.txt', 'w') as file:
                 file.writelines(todos)

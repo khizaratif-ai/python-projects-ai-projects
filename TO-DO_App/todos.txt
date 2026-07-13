@@ -1,3 +1,2 @@
-sleep 
-clean 
-Breakfast
+Sleep
+coffee
