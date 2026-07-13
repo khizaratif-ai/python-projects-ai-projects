@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Weather Forecast</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <h1>
+        🌤 Weather Forecast
+    </h1>
+
+
+    <form method="POST">
+
+        <input
+        type="text"
+        name="city"
+        placeholder="Enter city name"
+        required>
+
+
+        <button>
+            Search
+        </button>
+
+    </form>
+
+
+
+    {% if weather %}
+
+
+    <div class="current-card">
+
+
+        <h2>
+            {{weather.city}}, {{weather.country}}
+        </h2>
+
+
+        <img src="https:{{weather.icon}}">
+
+
+        <h1>
+            {{weather.temperature}}°C
+        </h1>
+
+
+        <h3>
+            {{weather.condition}}
+        </h3>
+
+
+        <div class="stats">
+
+            <p>
+                💧 Humidity:
+                {{weather.humidity}}%
+            </p>
+
+
+            <p>
+                🌬 Wind:
+                {{weather.wind}} km/h
+            </p>
+
+
+            <p>
+                🌡 Feels:
+                {{weather.feels}}°C
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <h2>
+        5 Day Forecast
+    </h2>
+
+
+
+    <div class="forecast">
+
+
+        {% for day in weather.forecast %}
+
+
+        <div class="card">
+
+
+            <h3>
+                {{day.date}}
+            </h3>
+
+
+            <img src="https:{{day.icon}}">
+
+
+            <p>
+                {{day.condition}}
+            </p>
+
+
+            <h2>
+                {{day.temperature}}°C
+            </h2>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    {% endif %}
+
+
+
+</div>
+
+
+</body>
+
+</html>
