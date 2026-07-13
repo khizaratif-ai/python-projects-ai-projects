@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>My Todo App</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>My Todo App</h1>
+
+
+<form action="/add" method="POST">
+
+<input
+type="text"
+name="todo"
+placeholder="Enter your todo">
+
+<button>Add</button>
+
+</form>
+
+
+
+<ul>
+
+{% for todo in todos %}
+
+<li>
+
+{{todo.strip()}}
+
+
+<a href="/edit/{{todo.strip()}}">
+<button>Edit</button>
+</a>
+
+
+<a href="/complete/{{todo.strip()}}">
+<button class="complete">
+Complete
+</button>
+</a>
+
+
+</li>
+
+
+{% endfor %}
+
+
+</ul>
+
+
+<a href="/exit">
+
+<button class="exit">
+Exit
+</button>
+
+</a>
+
+
+
+</div>
+
+
+</body>
+
+</html>
