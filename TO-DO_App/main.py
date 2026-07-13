@@ -1,10 +1,4 @@
-def get_todos():
-    with open('todos.txt', 'r') as file:
-        todos = file.readlines()
-    return todos
-
-
-
+from functions import get_todos, write_todos
 while True:
     user_action = input("Type 'Add', 'Show', 'Edit', 'Complete' or 'Exit' : ")
     user_action = user_action.capitalize()
@@ -14,18 +8,16 @@ while True:
         todo = user_action[4:]
         todo = todo.capitalize()
 
-        todos = get_todos()
+        todos = get_todos('todos.txt')
 
         todos.append(todo + "\n")
 
-        file = open('todos.txt', 'w')
-        file.writelines(todos)
-        file.close()
+        write_todos('todos.txt', todos)
     elif user_action.startswith('Show'):
        #if not todos:
            #print("No todos are added!")
         #if todos:
-         todos = get_todos()
+         todos = get_todos('todos.txt')
 
          print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
          for index, item in enumerate(todos, start = 1):
@@ -37,13 +29,13 @@ while True:
         try:
             number = int(user_action[5:])
             number = number - 1
-            todos = get_todos()
+            todos = get_todos('todos.txt')
             new_todo = input("Enter new todo: ")
+            new_todo = new_todo.capitalize()
             todos[number] = new_todo + "\n"
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos('todos.txt', todos)
             print("\n""YOUR TODO LIST IS SUCCESSFULLY UPDATED!")
-            print("\n" + f"--------------YOUR TODO LIST HAVE--------------")
+            print("\n" + f"--------------YOUR TODO LIST HAVE HAVE {len(todos)} ITEMS--------------")
             for index, item in enumerate(todos, start = 1):
                 item = item.strip('\n')
                 row = f"{index}. {item}"
@@ -56,10 +48,9 @@ while True:
     elif user_action.startswith('Complete'):
         try:
             number = int(user_action[9:])
-            todos = get_todos()
+            todos = get_todos('todos.txt')
             todos.pop(number - 1)
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos('todos.txt', todos)
             print("\n""YOUR TODO LIST IS SUCCESSFULLY UPDATED!")
             print("\n" + f"--------------YOUR TODO LIST HAVE {len(todos)} ITEMS--------------")
             for index, item in enumerate(todos, start = 1):
