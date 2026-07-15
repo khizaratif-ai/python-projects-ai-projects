@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Event Finder</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎵 Music Event Finder</h1>
+
+    <h2>Results for "{{ keyword }}"</h2>
+
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+
+    {% if events %}
+
+        <div class="events-grid">
+
+        {% for event in events %}
+
+            <div class="event-card">
+
+                <img src="{{ event.image }}" alt="Event Image">
+
+                <div class="event-info">
+
+                    <h2>{{ event.name }}</h2>
+
+                    <p><strong>📅 Date:</strong> {{ event.date }}</p>
+
+                    <p><strong>⏰ Time:</strong> {{ event.time }}</p>
+
+                    <p><strong>📍 Venue:</strong> {{ event.venue }}</p>
+
+                    <p><strong>🌍 City:</strong> {{ event.city }}</p>
+
+                    <a href="{{ event.url }}" target="_blank">
+                        <button class="ticket-btn">
+                            🎫 Buy Tickets
+                        </button>
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+    <br><br>
+
+    <a href="/">
+        <button class="search-btn">
+            🔍 Search Again
+        </button>
+    </a>
+
+</div>
+
+</body>
+
+</html>
