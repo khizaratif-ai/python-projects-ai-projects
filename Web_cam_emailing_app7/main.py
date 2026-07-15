@@ -6,57 +6,45 @@ from ultralytics import YOLO
 from emailing import send_email
 
 
-# Create image folder
-
+# Create images folder
 if not os.path.exists("images"):
     os.makedirs("images")
 
 
-
-# Load YOLO model
-
 print("Loading AI model...")
-
 model = YOLO("yolov8n.pt")
-
 print("Model loaded!")
 
 
-
-# Open camera
-
 camera = cv2.VideoCapture(0)
 
-
 if not camera.isOpened():
-
     print("Camera not found")
     exit()
-
 
 
 time.sleep(2)
 
 
+# Security settings
+image_taken = False
+last_person_time = 0
 
-image_count = 1
+# Time person must be gone before resetting
+RESET_TIME = 10   # seconds
 
-person_detected_before = False
+
+image_number = 1
 
 
 
 while True:
 
-
     success, frame = camera.read()
-
 
     if not success:
         break
 
-
-
-    # YOLO detection
 
     results = model(
         frame,
@@ -71,16 +59,9 @@ while True:
 
     for result in results:
 
-
-        boxes = result.boxes
-
-
-        for box in boxes:
-
+        for box in result.boxes:
 
             class_id = int(box.cls[0])
-
-
             confidence = float(box.conf[0])
 
 
@@ -88,11 +69,10 @@ while True:
 
             if class_id == 0 and confidence > 0.5:
 
-
                 person_detected = True
 
 
-                x1,y1,x2,y2 = map(
+                x1, y1, x2, y2 = map(
                     int,
                     box.xyxy[0]
                 )
@@ -100,8 +80,8 @@ while True:
 
                 cv2.rectangle(
                     frame,
-                    (x1,y1),
-                    (x2,y2),
+                    (x1, y1),
+                    (x2, y2),
                     (0,255,0),
                     3
                 )
@@ -119,41 +99,76 @@ while True:
 
 
 
-    # Send email only once when person appears
+    # Person detected
 
-    if person_detected and not person_detected_before:
-
-
-        image_path = f"images/intruder_{image_count}.jpg"
+    if person_detected:
 
 
-        cv2.imwrite(
-            image_path,
-            frame
-        )
+        last_person_time = time.time()
 
 
-        print(
-            "Person detected:",
-            image_path
-        )
+        # Take only one picture
+
+        if not image_taken:
 
 
-        email_thread = Thread(
-            target=send_email,
-            args=(image_path,)
-        )
+            image_path = f"images/intruder_{image_number}.jpg"
 
 
-        email_thread.start()
+            cv2.imwrite(
+                image_path,
+                frame
+            )
+
+
+            print(
+                "Image captured:",
+                image_path
+            )
+
+
+            email_thread = Thread(
+                target=send_email,
+                args=(image_path,)
+            )
+
+
+            email_thread.start()
+
+
+            image_number += 1
+
+
+            image_taken = True
 
 
 
-        image_count += 1
+
+    # Person disappeared
+
+    if not person_detected:
 
 
+        if image_taken:
 
-    person_detected_before = person_detected
+
+            time_difference = (
+                time.time() - last_person_time
+            )
+
+
+            # Reset after person leaves
+
+            if time_difference > RESET_TIME:
+
+
+                print(
+                    "System ready for new detection"
+                )
+
+
+                image_taken = False
+
 
 
 
@@ -172,5 +187,4 @@ while True:
 
 
 camera.release()
-
 cv2.destroyAllWindows()
