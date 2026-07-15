@@ -1,123 +1,176 @@
 import cv2
-import time
 import os
-import glob
+import time
 from threading import Thread
+from ultralytics import YOLO
 from emailing import send_email
 
-# Create images folder if it doesn't exist
+
+# Create image folder
+
 if not os.path.exists("images"):
     os.makedirs("images")
 
-# Open webcam
-video = cv2.VideoCapture(0)
 
-if not video.isOpened():
-    print("Error: Could not open webcam.")
+
+# Load YOLO model
+
+print("Loading AI model...")
+
+model = YOLO("yolov8n.pt")
+
+print("Model loaded!")
+
+
+
+# Open camera
+
+camera = cv2.VideoCapture(0)
+
+
+if not camera.isOpened():
+
+    print("Camera not found")
     exit()
+
+
 
 time.sleep(2)
 
-first_frame = None
-status_list = []
-count = 1
-image_with_object = None
 
 
-def clean_folder():
-    print("Cleaning images folder...")
-    images = glob.glob("images/*.png")
-    for image in images:
-        try:
-            os.remove(image)
-        except:
-            pass
-    print("Images folder cleaned.")
+image_count = 1
+
+person_detected_before = False
+
 
 
 while True:
 
-    status = 0
 
-    check, frame = video.read()
+    success, frame = camera.read()
 
-    if not check:
-        print("Could not read frame.")
+
+    if not success:
         break
 
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
-    if first_frame is None:
-        first_frame = gray
-        continue
 
-    delta_frame = cv2.absdiff(first_frame, gray)
+    # YOLO detection
 
-    thresh = cv2.threshold(delta_frame, 60, 255, cv2.THRESH_BINARY)[1]
-    thresh = cv2.dilate(thresh, None, iterations=2)
-
-    contours, _ = cv2.findContours(
-        thresh,
-        cv2.RETR_EXTERNAL,
-        cv2.CHAIN_APPROX_SIMPLE
+    results = model(
+        frame,
+        conf=0.5,
+        verbose=False
     )
 
-    for contour in contours:
 
-        if cv2.contourArea(contour) < 5000:
-            continue
+    person_detected = False
 
-        status = 1
 
-        x, y, w, h = cv2.boundingRect(contour)
 
-        cv2.rectangle(
-            frame,
-            (x, y),
-            (x + w, y + h),
-            (0, 255, 0),
-            3,
+    for result in results:
+
+
+        boxes = result.boxes
+
+
+        for box in boxes:
+
+
+            class_id = int(box.cls[0])
+
+
+            confidence = float(box.conf[0])
+
+
+            # YOLO class 0 = person
+
+            if class_id == 0 and confidence > 0.5:
+
+
+                person_detected = True
+
+
+                x1,y1,x2,y2 = map(
+                    int,
+                    box.xyxy[0]
+                )
+
+
+                cv2.rectangle(
+                    frame,
+                    (x1,y1),
+                    (x2,y2),
+                    (0,255,0),
+                    3
+                )
+
+
+                cv2.putText(
+                    frame,
+                    f"Person {confidence:.2f}",
+                    (x1,y1-10),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.8,
+                    (0,255,0),
+                    2
+                )
+
+
+
+    # Send email only once when person appears
+
+    if person_detected and not person_detected_before:
+
+
+        image_path = f"images/intruder_{image_count}.jpg"
+
+
+        cv2.imwrite(
+            image_path,
+            frame
         )
 
-        image_with_object = f"images/{count}.png"
 
-        cv2.imwrite(image_with_object, frame)
+        print(
+            "Person detected:",
+            image_path
+        )
 
-        count += 1
 
-    status_list.append(status)
-    status_list = status_list[-2:]
+        email_thread = Thread(
+            target=send_email,
+            args=(image_path,)
+        )
 
-    if len(status_list) == 2:
 
-        if status_list[0] == 1 and status_list[1] == 0:
+        email_thread.start()
 
-            if image_with_object is not None:
 
-                email_thread = Thread(
-                    target=send_email,
-                    args=(image_with_object,),
-                    daemon=True,
-                )
 
-                clean_thread = Thread(
-                    target=clean_folder,
-                    daemon=True,
-                )
+        image_count += 1
 
-                email_thread.start()
-                email_thread.join()
 
-                clean_thread.start()
 
-    cv2.imshow("Motion Detector", frame)
-    cv2.imshow("Threshold", thresh)
+    person_detected_before = person_detected
+
+
+
+    cv2.imshow(
+        "AI Security Camera",
+        frame
+    )
+
 
     key = cv2.waitKey(1)
+
 
     if key == ord("q"):
         break
 
-video.release()
+
+
+camera.release()
+
 cv2.destroyAllWindows()
