@@ -6,31 +6,27 @@
 <style>
 
 .hero{
-
     text-align:center;
-    margin-bottom:50px;
-
+    margin:50px 0;
 }
 
 .hero h1{
-
     font-size:48px;
     color:#222;
     margin-bottom:10px;
-
 }
 
 .hero p{
-
     color:#666;
     font-size:18px;
-
 }
 
 .menu-grid{
 
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+
     gap:35px;
 
 }
@@ -38,11 +34,12 @@
 .food-card{
 
     background:white;
+
     border-radius:20px;
 
     overflow:hidden;
 
-    box-shadow:0 15px 35px rgba(0,0,0,.08);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
 
     transition:.35s;
 
@@ -52,22 +49,24 @@
 
     transform:translateY(-10px);
 
-    box-shadow:0 20px 45px rgba(0,0,0,.18);
+    box-shadow:0 18px 40px rgba(0,0,0,.15);
 
 }
 
 .food-image{
 
-    width:100%;
-    height:240px;
+    position:relative;
+
+    height:250px;
+
     overflow:hidden;
-    background:#f3f3f3;
 
 }
 
 .food-image img{
 
     width:100%;
+
     height:100%;
 
     object-fit:cover;
@@ -82,6 +81,28 @@
 
 }
 
+.badge{
+
+    position:absolute;
+
+    top:15px;
+
+    left:15px;
+
+    background:#ff7a00;
+
+    color:white;
+
+    padding:8px 15px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
 .food-content{
 
     padding:25px;
@@ -90,8 +111,8 @@
 
 .food-content h2{
 
-    font-size:28px;
-    margin-bottom:12px;
+    margin-bottom:10px;
+
     color:#222;
 
 }
@@ -99,46 +120,66 @@
 .food-content p{
 
     color:#777;
+
     line-height:1.7;
-    margin-bottom:20px;
+
+    margin-bottom:18px;
+
+    min-height:65px;
+
+}
+
+.rating{
+
+    color:#f5b301;
+
+    font-size:18px;
+
+    margin-bottom:18px;
 
 }
 
 .bottom{
 
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 
 }
 
 .price{
 
-    font-size:28px;
+    font-size:30px;
+
     color:#ff7a00;
-    font-weight:700;
+
+    font-weight:bold;
 
 }
 
 .add-btn{
 
-    background:#ff7a00;
+    background:#111;
 
     color:white;
 
-    padding:12px 24px;
-
-    border-radius:10px;
-
     text-decoration:none;
 
+    padding:12px 22px;
+
+    border-radius:12px;
+
     transition:.3s;
+
+    font-weight:bold;
 
 }
 
 .add-btn:hover{
 
-    background:#e36d00;
+    background:#ff7a00;
 
 }
 
@@ -146,23 +187,25 @@
 
     display:block;
 
-    width:220px;
+    width:240px;
 
-    margin:60px auto 0;
+    margin:60px auto;
 
-    background:#111;
+    background:#ff7a00;
 
     color:white;
 
     text-align:center;
 
+    text-decoration:none;
+
     padding:16px;
 
-    border-radius:12px;
+    border-radius:14px;
 
     font-size:18px;
 
-    font-weight:600;
+    font-weight:bold;
 
     transition:.3s;
 
@@ -170,15 +213,17 @@
 
 .cart-btn:hover{
 
-    background:#ff7a00;
+    background:#111;
 
 }
 
 .empty{
 
     text-align:center;
+
     font-size:28px;
-    color:#777;
+
+    color:#666;
 
 }
 
@@ -186,26 +231,21 @@
 
 .hero h1{
 
-    font-size:38px;
+    font-size:36px;
 
 }
 
 .food-image{
 
-    height:210px;
+    height:220px;
 
 }
 
 .bottom{
 
     flex-direction:column;
+
     gap:18px;
-
-}
-
-.price{
-
-    font-size:24px;
 
 }
 
@@ -215,9 +255,9 @@
 
 <div class="hero">
 
-    <h1>🍽 Our Delicious Menu</h1>
+    <h1>🍽️ Our Menu</h1>
 
-    <p>Freshly prepared meals made with love.</p>
+    <p>Fresh meals prepared with quality ingredients.</p>
 
 </div>
 
@@ -231,23 +271,39 @@
 
         <img src="{{ dish.image.url }}" alt="{{ dish.name }}">
 
+        <div class="badge">
+            Best Seller
+        </div>
+
     </div>
 
     <div class="food-content">
 
         <h2>{{ dish.name }}</h2>
 
-        <p>{{ dish.description }}</p>
+        <div class="rating">
+
+            ⭐⭐⭐⭐⭐
+
+        </div>
+
+        <p>
+
+            {{ dish.description }}
+
+        </p>
 
         <div class="bottom">
 
             <span class="price">
-                Rs {{ dish.price }}
+
+                ${{ dish.price }}
+
             </span>
 
             <a href="{% url 'add_to_cart' dish.id %}" class="add-btn">
 
-                Add To Cart
+                🛒 Add to Cart
 
             </a>
 

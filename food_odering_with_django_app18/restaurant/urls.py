@@ -2,35 +2,48 @@ from django.urls import path
 
 from . import views
 
-
-
 urlpatterns = [
 
     path(
-        '',
+        "",
         views.menu,
-        name='menu'
+        name="menu"
     ),
 
-
     path(
-        'add-to-cart/<int:id>/',
+        "add-to-cart/<int:id>/",
         views.add_to_cart,
-        name='add_to_cart'
+        name="add_to_cart"
     ),
 
+    path(
+        "increase/<int:id>/",
+        views.increase_quantity,
+        name="increase_quantity"
+    ),
 
     path(
-        'cart/',
+        "decrease/<int:id>/",
+        views.decrease_quantity,
+        name="decrease_quantity"
+    ),
+
+    path(
+        "remove/<int:id>/",
+        views.remove_from_cart,
+        name="remove_from_cart"
+    ),
+
+    path(
+        "cart/",
         views.cart,
-        name='cart'
+        name="cart"
     ),
 
-
     path(
-        'checkout/',
+        "checkout/",
         views.checkout,
-        name='checkout'
+        name="checkout"
     ),
 
 ]

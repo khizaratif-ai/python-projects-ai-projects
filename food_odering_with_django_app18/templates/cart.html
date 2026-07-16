@@ -1,197 +1,425 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
 
 <style>
 
-.page-title{
-    font-size:42px;
-    font-weight:700;
-    margin-bottom:40px;
-    text-align:center;
+body{
+    background:#f5f5f7;
 }
 
-.cart-wrapper{
+.container{
+    width:90%;
+    max-width:1400px;
+    margin:auto;
+}
+
+.page-title{
+    text-align:center;
+    margin:50px 0;
+}
+
+.page-title h1{
+    font-size:46px;
+    color:#222;
+}
+
+.page-title p{
+    color:#777;
+    font-size:18px;
+}
+
+.cart-container{
+
     display:grid;
+
     grid-template-columns:2fr 1fr;
+
     gap:35px;
+
+    align-items:start;
+
 }
 
 .cart-items{
+
     display:flex;
+
     flex-direction:column;
+
     gap:25px;
+
 }
 
 .cart-card{
-    background:#fff;
-    border-radius:18px;
-    overflow:hidden;
+
     display:flex;
+
+    background:white;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
     box-shadow:0 10px 30px rgba(0,0,0,.08);
+
     transition:.3s;
+
 }
 
 .cart-card:hover{
+
     transform:translateY(-6px);
-    box-shadow:0 20px 40px rgba(0,0,0,.12);
+
 }
 
-.cart-card img{
+.cart-image{
+
     width:220px;
+
     height:180px;
+
+}
+
+.cart-image img{
+
+    width:100%;
+
+    height:100%;
+
     object-fit:cover;
+
 }
 
-.cart-info{
-    padding:25px;
+.cart-content{
+
     flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+
+    padding:25px;
+
 }
 
-.cart-info h2{
-    font-size:28px;
-    margin-bottom:10px;
+.cart-content h2{
+
+    margin:0;
+
+    color:#222;
+
 }
 
-.cart-info p{
+.cart-content p{
+
     color:#777;
-    font-size:18px;
-    margin-bottom:15px;
+
+    margin:12px 0;
+
+    line-height:1.6;
+
 }
 
 .price{
-    font-size:26px;
-    font-weight:700;
+
+    font-size:28px;
+
     color:#ff7a00;
+
+    font-weight:bold;
+
+}
+
+.quantity{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin:18px 0;
+
+}
+
+.qty-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#ff7a00;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:24px;
+
+    transition:.3s;
+
+}
+
+.qty-btn:hover{
+
+    background:#e56700;
+
+}
+
+.qty{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+.remove-btn{
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    padding:10px 18px;
+
+    background:#dc3545;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+}
+
+.remove-btn:hover{
+
+    background:#b52b37;
+
 }
 
 .summary{
+
     background:white;
+
     border-radius:18px;
+
     padding:30px;
-    height:fit-content;
+
     box-shadow:0 10px 30px rgba(0,0,0,.08);
+
     position:sticky;
-    top:110px;
+
+    top:30px;
+
 }
 
-.summary h3{
-    margin-bottom:20px;
-    font-size:28px;
+.summary h2{
+
+    margin-top:0;
+
+    color:#222;
+
 }
 
-.summary hr{
-    border:none;
-    border-top:1px solid #eee;
-    margin:20px 0;
-}
+.summary-row{
 
-.summary p{
     display:flex;
+
     justify-content:space-between;
-    margin:15px 0;
-    color:#555;
+
+    margin:18px 0;
+
+    font-size:18px;
+
+}
+
+.total{
+
+    border-top:1px solid #ddd;
+
+    padding-top:18px;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:#ff7a00;
+
 }
 
 .checkout-btn{
-    width:100%;
-    margin-top:20px;
-    padding:15px;
-    background:#ff7a00;
-    color:white;
-    text-align:center;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:600;
-    transition:.3s;
+
     display:block;
+
+    margin-top:30px;
+
+    background:#111;
+
+    color:white;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    padding:16px;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
 }
 
 .checkout-btn:hover{
-    background:#e86f00;
+
+    background:#ff7a00;
+
 }
 
 .empty{
-    background:white;
-    border-radius:18px;
-    padding:80px;
+
     text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    padding:100px 20px;
+
 }
 
 .empty h2{
-    font-size:32px;
-    margin-bottom:15px;
+
+    font-size:42px;
+
+    color:#555;
+
 }
 
 .empty p{
-    color:#666;
-    margin-bottom:30px;
+
+    color:#888;
+
+    font-size:18px;
+
 }
 
-.back-btn{
+.menu-btn{
+
     display:inline-block;
-    padding:14px 28px;
-    background:#111;
-    color:white;
-    border-radius:10px;
-    text-decoration:none;
-}
 
-.back-btn:hover{
+    margin-top:30px;
+
     background:#ff7a00;
+
+    color:white;
+
+    padding:16px 28px;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
 }
 
 @media(max-width:900px){
 
-.cart-wrapper{
+.cart-container{
+
     grid-template-columns:1fr;
+
 }
 
 .cart-card{
+
     flex-direction:column;
+
 }
 
-.cart-card img{
+.cart-image{
+
     width:100%;
-    height:240px;
-}
 
-.summary{
-    position:static;
+    height:240px;
+
 }
 
 }
 
 </style>
 
-<h1 class="page-title">🛒 Your Cart</h1>
+<div class="container">
 
-{% if dishes %}
+<div class="page-title">
 
-<div class="cart-wrapper">
+<h1>🛒 Your Cart</h1>
+
+<p>Review your delicious order before checkout.</p>
+
+</div>
+
+{% if items %}
+
+<div class="cart-container">
 
 <div class="cart-items">
 
-{% for dish in dishes %}
+{% for item in items %}
 
 <div class="cart-card">
 
-<img src="{{ dish.image.url }}" alt="{{ dish.name }}">
+<div class="cart-image">
 
-<div class="cart-info">
+<img src="{{ item.dish.image.url }}" alt="{{ item.dish.name }}">
 
-<h2>{{ dish.name }}</h2>
+</div>
 
-<p>Freshly prepared with premium ingredients.</p>
+<div class="cart-content">
+
+<h2>{{ item.dish.name }}</h2>
+
+<p>{{ item.dish.description }}</p>
 
 <div class="price">
-Rs {{ dish.price }}
+
+${{ item.total }}
+
 </div>
+
+<div class="quantity">
+
+<a href="{% url 'decrease_quantity' item.dish.id %}" class="qty-btn">
+
+−
+
+</a>
+
+<div class="qty">
+
+{{ item.quantity }}
+
+</div>
+
+<a href="{% url 'increase_quantity' item.dish.id %}" class="qty-btn">
+
++
+
+</a>
+
+</div>
+
+<a href="{% url 'remove_from_cart' item.dish.id %}" class="remove-btn">
+
+🗑 Remove Item
+
+</a>
 
 </div>
 
@@ -203,22 +431,44 @@ Rs {{ dish.price }}
 
 <div class="summary">
 
-<h3>Order Summary</h3>
+<h2>📋 Order Summary</h2>
 
-<p>
-<span>Items</span>
-<span>{{ dishes|length }}</span>
-</p>
+<div class="summary-row">
 
-<hr>
+<span>Subtotal</span>
 
-<p>
-<span>Status</span>
-<span>Ready to Order</span>
-</p>
+<span>${{ subtotal }}</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>Delivery</span>
+
+<span>${{ delivery }}</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>Tax (5%)</span>
+
+<span>${{ tax }}</span>
+
+</div>
+
+<div class="summary-row total">
+
+<span>Total</span>
+
+<span>${{ grand_total }}</span>
+
+</div>
 
 <a href="{% url 'checkout' %}" class="checkout-btn">
-Proceed To Checkout
+
+Proceed to Checkout →
+
 </a>
 
 </div>
@@ -229,16 +479,20 @@ Proceed To Checkout
 
 <div class="empty">
 
-<h2>Your Cart is Empty</h2>
+<h2>Your Cart Is Empty 🛒</h2>
 
-<p>Add delicious meals from our menu.</p>
+<p>Add something delicious from our menu.</p>
 
-<a href="{% url 'menu' %}" class="back-btn">
+<a href="{% url 'menu' %}" class="menu-btn">
+
 Browse Menu
+
 </a>
 
 </div>
 
 {% endif %}
+
+</div>
 
 {% endblock %}

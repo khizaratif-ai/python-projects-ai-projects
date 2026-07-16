@@ -1,132 +1,124 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
 
 <style>
 
-.checkout{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:75vh;
+body{
+    background:#f5f5f7;
 }
 
-.checkout-card{
-
-    width:100%;
-    max-width:700px;
-
-    background:#fff;
-
-    border-radius:20px;
-
-    padding:45px;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.08);
-
+.container{
+    width:90%;
+    max-width:1400px;
+    margin:auto;
 }
 
-.checkout-card h1{
-
+.page-title{
     text-align:center;
-
-    font-size:40px;
-
-    margin-bottom:10px;
-
+    margin:50px 0;
 }
 
-.checkout-card p{
+.page-title h1{
+    font-size:46px;
+    color:#222;
+}
 
-    text-align:center;
-
+.page-title p{
     color:#777;
+    font-size:18px;
+}
 
-    margin-bottom:35px;
+.checkout-container{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:35px;
+
+    align-items:start;
 
 }
 
-form p{
+.checkout-form{
 
-    margin-bottom:22px;
+    background:white;
+
+    padding:35px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
 
 }
 
-form label{
+.checkout-form h2{
+
+    margin-top:0;
+
+    margin-bottom:25px;
+
+    color:#222;
+
+}
+
+.checkout-form label{
 
     display:block;
 
+    margin-top:18px;
+
     margin-bottom:8px;
 
-    font-weight:600;
+    font-weight:bold;
 
-    color:#333;
+    color:#444;
 
 }
 
-form input,
-form textarea,
-form select{
+.checkout-form input,
+.checkout-form textarea{
 
     width:100%;
 
-    padding:15px;
+    padding:14px;
 
-    border:2px solid #e5e5e5;
+    border:1px solid #ddd;
 
-    border-radius:12px;
+    border-radius:10px;
 
     font-size:16px;
 
-    font-family:Poppins,sans-serif;
-
-    transition:.3s;
-
-    background:#fafafa;
+    box-sizing:border-box;
 
 }
 
-form textarea{
+.checkout-form textarea{
 
     resize:vertical;
+
     min-height:120px;
 
 }
 
-form input:focus,
-form textarea:focus,
-form select:focus{
-
-    outline:none;
-
-    border-color:#ff7a00;
-
-    background:white;
-
-    box-shadow:0 0 15px rgba(255,122,0,.15);
-
-}
-
-.order-btn{
+.place-order{
 
     width:100%;
 
-    margin-top:15px;
+    margin-top:30px;
 
-    padding:16px;
-
-    border:none;
+    padding:18px;
 
     background:#ff7a00;
 
     color:white;
 
+    border:none;
+
     border-radius:12px;
 
     font-size:18px;
-
-    font-weight:600;
 
     cursor:pointer;
 
@@ -134,39 +126,75 @@ form select:focus{
 
 }
 
-.order-btn:hover{
+.place-order:hover{
 
-    background:#e56f00;
-
-    transform:translateY(-3px);
-
-    box-shadow:0 12px 25px rgba(255,122,0,.35);
+    background:#111;
 
 }
 
-.secure{
+.summary{
 
-    text-align:center;
+    background:white;
 
-    color:#777;
-
-    margin-top:20px;
-
-    font-size:15px;
-
-}
-
-@media(max-width:768px){
-
-.checkout-card{
+    border-radius:18px;
 
     padding:30px;
 
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    position:sticky;
+
+    top:30px;
+
 }
 
-.checkout-card h1{
+.summary h2{
 
-    font-size:32px;
+    margin-top:0;
+
+    margin-bottom:20px;
+
+}
+
+.order-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:15px 0;
+
+    color:#444;
+
+}
+
+.line{
+
+    border-top:1px solid #ddd;
+
+    margin:20px 0;
+
+}
+
+.total{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:#ff7a00;
+
+}
+
+@media(max-width:900px){
+
+.checkout-container{
+
+    grid-template-columns:1fr;
 
 }
 
@@ -174,21 +202,39 @@ form select:focus{
 
 </style>
 
-<div class="checkout">
+<div class="container">
 
-<div class="checkout-card">
+<div class="page-title">
 
 <h1>💳 Checkout</h1>
 
-<p>Complete your order by filling in your delivery details.</p>
+<p>Complete your order below.</p>
+
+</div>
+
+<div class="checkout-container">
+
+<div class="checkout-form">
+
+<h2>Customer Information</h2>
 
 <form method="POST">
 
 {% csrf_token %}
 
-{{ form.as_p }}
+<label>Full Name</label>
 
-<button type="submit" class="order-btn">
+{{ form.customer_name }}
+
+<label>Phone Number</label>
+
+{{ form.phone }}
+
+<label>Delivery Address</label>
+
+{{ form.address }}
+
+<button type="submit" class="place-order">
 
 Place Order
 
@@ -196,9 +242,69 @@ Place Order
 
 </form>
 
-<div class="secure">
+</div>
 
-🔒 Your information is securely processed.
+<div class="summary">
+
+<h2>🧾 Order Summary</h2>
+
+{% for item in items %}
+
+<div class="order-item">
+
+<span>
+
+{{ item.dish.name }}
+
+× {{ item.quantity }}
+
+</span>
+
+<span>
+
+${{ item.total }}
+
+</span>
+
+</div>
+
+{% endfor %}
+
+<div class="line"></div>
+
+<div class="order-item">
+
+<span>Subtotal</span>
+
+<span>${{ subtotal }}</span>
+
+</div>
+
+<div class="order-item">
+
+<span>Delivery</span>
+
+<span>${{ delivery }}</span>
+
+</div>
+
+<div class="order-item">
+
+<span>Tax</span>
+
+<span>${{ tax }}</span>
+
+</div>
+
+<div class="line"></div>
+
+<div class="total">
+
+<span>Total</span>
+
+<span>${{ grand_total }}</span>
+
+</div>
 
 </div>
 
