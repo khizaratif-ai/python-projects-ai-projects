@@ -13,8 +13,7 @@ SECRET_KEY = 'django-insecure-change-this-later'
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 
 # Applications
