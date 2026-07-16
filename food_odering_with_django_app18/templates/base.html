@@ -1,56 +1,232 @@
-
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en">
 
 <head>
-<link rel="stylesheet" href="/static/style.css">
 
-    <title>
-        Food Ordering App
-    </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Food Ordering</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+            background:#f7f7f7;
+            color:#222;
+
+        }
+
+        /* NAVBAR */
+
+        nav{
+
+            background:#111;
+            color:white;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:18px 8%;
+
+            position:sticky;
+            top:0;
+            z-index:1000;
+
+            box-shadow:0 5px 18px rgba(0,0,0,.15);
+
+        }
+
+        .logo{
+
+            font-size:34px;
+            font-weight:700;
+            letter-spacing:1px;
+            color:#ff7a00;
+
+        }
+
+        .nav-links{
+
+            display:flex;
+            align-items:center;
+            gap:35px;
+
+        }
+
+        .nav-links a{
+
+            text-decoration:none;
+            color:white;
+            font-size:17px;
+            font-weight:500;
+
+            transition:.3s;
+
+        }
+
+        .nav-links a:hover{
+
+            color:#ff7a00;
+
+        }
+
+        /* MAIN */
+
+        .container{
+
+            width:90%;
+            max-width:1300px;
+
+            margin:auto;
+            padding:50px 0;
+
+        }
+
+        /* BUTTONS */
+
+        button{
+
+            background:#ff7a00;
+
+            color:white;
+
+            border:none;
+
+            padding:13px 30px;
+
+            border-radius:10px;
+
+            cursor:pointer;
+
+            font-size:16px;
+            font-weight:600;
+
+            transition:.3s;
+
+        }
+
+        button:hover{
+
+            background:#e76e00;
+
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 20px rgba(255,122,0,.3);
+
+        }
+
+        a{
+
+            text-decoration:none;
+
+        }
+
+        /* SCROLLBAR */
+
+        ::-webkit-scrollbar{
+
+            width:10px;
+
+        }
+
+        ::-webkit-scrollbar-thumb{
+
+            background:#ff7a00;
+            border-radius:20px;
+
+        }
+
+        ::-webkit-scrollbar-track{
+
+            background:#ececec;
+
+        }
+
+        /* MOBILE */
+
+        @media(max-width:768px){
+
+            nav{
+
+                flex-direction:column;
+                gap:18px;
+
+            }
+
+            .nav-links{
+
+                gap:20px;
+                flex-wrap:wrap;
+                justify-content:center;
+
+            }
+
+            .logo{
+
+                font-size:28px;
+
+            }
+
+            .container{
+
+                width:94%;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
-
 <body>
-
-
 
 <nav>
 
+    <div class="logo">
+        🍽 Foodie
+    </div>
 
-    <h1>
-        Food Ordering
-    </h1>
+    <div class="nav-links">
 
+        <a href="{% url 'menu' %}">
+            Menu
+        </a>
 
-    <a href="{% url 'menu' %}">
-        Menu
-    </a>
+        <a href="{% url 'cart' %}">
+            Cart
+        </a>
 
-
-    <a href="{% url 'cart' %}">
-        Cart
-    </a>
-
+    </div>
 
 </nav>
 
 
-
+<div class="container">
 
 {% block content %}
 
-
 {% endblock %}
 
+</div>
 
 
 <script src="{% static 'script.js' %}"></script>
-
 
 </body>
 

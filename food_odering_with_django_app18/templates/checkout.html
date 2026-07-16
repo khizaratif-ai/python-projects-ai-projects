@@ -3,28 +3,207 @@
 
 {% block content %}
 
+<style>
 
-<h2>
-    Checkout
-</h2>
+.checkout{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:75vh;
+}
 
+.checkout-card{
+
+    width:100%;
+    max-width:700px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:45px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.checkout-card h1{
+
+    text-align:center;
+
+    font-size:40px;
+
+    margin-bottom:10px;
+
+}
+
+.checkout-card p{
+
+    text-align:center;
+
+    color:#777;
+
+    margin-bottom:35px;
+
+}
+
+form p{
+
+    margin-bottom:22px;
+
+}
+
+form label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#333;
+
+}
+
+form input,
+form textarea,
+form select{
+
+    width:100%;
+
+    padding:15px;
+
+    border:2px solid #e5e5e5;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-family:Poppins,sans-serif;
+
+    transition:.3s;
+
+    background:#fafafa;
+
+}
+
+form textarea{
+
+    resize:vertical;
+    min-height:120px;
+
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus{
+
+    outline:none;
+
+    border-color:#ff7a00;
+
+    background:white;
+
+    box-shadow:0 0 15px rgba(255,122,0,.15);
+
+}
+
+.order-btn{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:16px;
+
+    border:none;
+
+    background:#ff7a00;
+
+    color:white;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.order-btn:hover{
+
+    background:#e56f00;
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(255,122,0,.35);
+
+}
+
+.secure{
+
+    text-align:center;
+
+    color:#777;
+
+    margin-top:20px;
+
+    font-size:15px;
+
+}
+
+@media(max-width:768px){
+
+.checkout-card{
+
+    padding:30px;
+
+}
+
+.checkout-card h1{
+
+    font-size:32px;
+
+}
+
+}
+
+</style>
+
+<div class="checkout">
+
+<div class="checkout-card">
+
+<h1>💳 Checkout</h1>
+
+<p>Complete your order by filling in your delivery details.</p>
 
 <form method="POST">
 
+{% csrf_token %}
 
-    {% csrf_token %}
+{{ form.as_p }}
 
+<button type="submit" class="order-btn">
 
-    {{ form.as_p }}
+Place Order
 
-
-    <button type="submit">
-        Place Order
-    </button>
-
+</button>
 
 </form>
 
+<div class="secure">
 
+🔒 Your information is securely processed.
+
+</div>
+
+</div>
+
+</div>
 
 {% endblock %}
