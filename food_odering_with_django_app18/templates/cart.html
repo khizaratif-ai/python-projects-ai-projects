@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<h2>
+    Your Cart
+</h2>
+
+
+
+{% for dish in dishes %}
+
+
+<div>
+
+
+    <img src="{{ dish.image.url }}" width="150">
+
+
+    <h3>
+        {{ dish.name }}
+    </h3>
+
+
+    <p>
+        Rs {{ dish.price }}
+    </p>
+
+
+</div>
+
+
+<hr>
+
+
+{% empty %}
+
+
+<h3>
+    Your cart is empty
+</h3>
+
+
+{% endfor %}
+
+
+
+{% if dishes %}
+
+
+<a href="{% url 'checkout' %}">
+
+    <button>
+        Proceed To Checkout
+    </button>
+
+</a>
+
+
+{% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<h2>
+    Our Menu
+</h2>
+
+
+{% for dish in dishes %}
+
+
+<div>
+
+
+    <img src="{{ dish.image.url }}" width="200">
+
+
+    <h3>
+        {{ dish.name }}
+    </h3>
+
+
+    <p>
+        {{ dish.description }}
+    </p>
+
+
+    <h4>
+        Rs {{ dish.price }}
+    </h4>
+
+
+    <a href="{% url 'add_to_cart' dish.id %}">
+
+        <button>
+            Add To Cart
+        </button>
+
+    </a>
+
+
+</div>
+
+
+<hr>
+
+
+{% empty %}
+
+
+<h3>
+    No dishes available
+</h3>
+
+
+{% endfor %}
+
+
+
+<a href="{% url 'cart' %}">
+
+    View Cart
+
+</a>
+
+
+
+{% endblock %}
