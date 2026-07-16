@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Application Confirmation</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="confirmation-container">
+
+    <div class="confirmation-card">
+
+        <h1>🎉 Congratulations {{ first_name }}!</h1>
+
+        <h2>Your Application Has Been Received</h2>
+
+        <p>
+
+            Thank you for submitting your application.
+
+        </p>
+
+        <p>
+
+            We are pleased to inform you that your application has been received successfully.
+
+        </p>
+
+        <div class="start-date-box">
+
+            <h3>Your Expected Start Date</h3>
+
+            <h2>{{ start_date }}</h2>
+
+        </div>
+
+        <p>
+
+            We look forward to welcoming you.
+
+        </p>
+
+        <hr>
+
+        <h3>Need Help?</h3>
+
+        <p>
+
+            For further enquiries please contact:
+
+        </p>
+
+        <p class="contact-email">
+
+            <a href="mailto:khizaratif657@gmail.com">
+                khizaratif657@gmail.com
+            </a>
+
+        </p>
+
+        <a href="{{ url_for('home') }}" class="home-btn">
+
+            Back to Home
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

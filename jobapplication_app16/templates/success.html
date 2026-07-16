@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Application Submitted</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="success-container">
+
+    <div class="success-card">
+
+        <h1>🎉 Application Submitted Successfully!</h1>
+
+        <p class="success-message">
+
+            Dear <strong>{{ first_name }}</strong>,
+
+            <br><br>
+
+            Thank you for applying.
+
+            <br><br>
+
+            Your application has been submitted successfully.
+
+            <br><br>
+
+            A confirmation email has been sent to the email address you provided.
+
+            <br><br>
+
+            Please check your inbox (and spam folder if necessary).
+
+        </p>
+
+        <a href="{{ url_for('home') }}" class="home-btn">
+            Submit Another Application
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
