@@ -29,3 +29,5 @@ To build strong programming fundamentals for AI/ML development.
 - news ai summarizer and emailing app 
 - ai agent with langchain, python and ollama 
 - student management system with SQlite 
+- recreated student management system with Mysql 
+- browser automation gui app 
