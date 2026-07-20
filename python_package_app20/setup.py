@@ -7,8 +7,8 @@ setup(
   version = '1.0.0',         #* To be increased every time your change your library
   license='MIT',             # Type of license. More here: https://help.github.com/articles/licensing-a-repository
   description = 'This package can be used to convert Excel invoices to PDF invoices.',    # Short description of your library
-  author = 'Ardit Sulce',                   # Your name
-  author_email = 'your.email@example.com',  # Your email
+  author = 'Khizar Atif',                   # Your name
+  author_email = 'khizaratif.ai@gmail.com',  # Your email
   url = 'https://example.com',              # Homepage of your library (e.g. github or your website)
   keywords = ['invoice', 'excel', 'pdf'],   # Keywords users can search on pypi.org
   install_requires=['pandas','fpdf', 'openpyxl'],                 # Other 3rd-party libs that pip needs to install
