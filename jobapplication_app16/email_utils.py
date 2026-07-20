@@ -4,6 +4,7 @@ from email.message import EmailMessage
 # Sender Email Configuration
 EMAIL_ADDRESS = "khizaratif657@gmail.com"
 EMAIL_PASSWORD = "khce jpvm qzfq rcrm"
+EMAIL_PASSWORD = "**** **** **** ****"
 
 
 def send_email(receiver_email, first_name, start_date, confirmation_link):

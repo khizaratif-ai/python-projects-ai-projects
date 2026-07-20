@@ -5,6 +5,7 @@ import os
 
 SENDER = "khizaratif657@gmail.com"
 PASSWORD = "khce jpvm qzfq rcrm"
+PASSWORD = "**** **** **** ****"
 RECEIVER = "khizaratif.ai@gmail.com"
 
 
