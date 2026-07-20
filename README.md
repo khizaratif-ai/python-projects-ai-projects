@@ -16,7 +16,7 @@ To build strong programming fundamentals for AI/ML development.
 ---
 
 ## 🚀 Projects
-- Simple Todo List
+- Simple Todo List (CLI, GUI, Web Application
 - pdf generator app
 - email news app
 - weather api simple app
@@ -30,4 +30,8 @@ To build strong programming fundamentals for AI/ML development.
 - ai agent with langchain, python and ollama 
 - student management system with SQlite 
 - recreated student management system with Mysql 
-- browser automation gui app 
+- browser automation gui app
+- job application web app using flask
+- leave management system using django
+- food ordering app "Foodie" using django with working admin panel
+- built and published the python package on pypi.org 
